@@ -23,6 +23,20 @@ Test::AnyEvent::plackup - Starting HTTP server by |plackup| command for tests
       warn "Stopped";
   });
 
+=head1 DEPENDENCY
+
+The module depends on L<AnyEvent>.  In addition, it requires
+L<Net::TCP::FindPort> and L<Parse::Netstat>, both registered as Git
+submodules (See C<.gitmodules>).
+
+=head1 DEVELOPMENT
+
+Latest version of the module is available at the GitHub repository:
+<https://github.com/wakaba/perl-test-anyevent-plackup>.
+
+The module is tested at Travis CI:
+<http://travis-ci.org/wakaba/perl-test-anyevent-plackup>.
+
 =head1 SEE ALSO
 
 L<Plack>, L<AnyEvent>.
