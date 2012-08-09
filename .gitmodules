@@ -1,0 +1,6 @@
+[submodule "modules/parse-netstat"]
+	path = modules/parse-netstat
+	url = git://github.com/wakaba/perl-Parse-Netstat
+[submodule "modules/net-tcp-findport"]
+	path = modules/net-tcp-findport
+	url = git://github.com/wakaba/perl-net-tcp-findport
