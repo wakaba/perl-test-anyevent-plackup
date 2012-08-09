@@ -29,6 +29,8 @@ The module depends on L<AnyEvent>.  In addition, it requires
 L<Net::TCP::FindPort> and L<Parse::Netstat>, both registered as Git
 submodules (See C<.gitmodules>).
 
+Moreover, C<plackup> and C<netstat> commands are required.
+
 =head1 DEVELOPMENT
 
 Latest version of the module is available at the GitHub repository:
