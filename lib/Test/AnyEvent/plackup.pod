@@ -1,0 +1,41 @@
+=head1 NAME
+
+Test::AnyEvent::plackup - Starting HTTP server by |plackup| command for tests
+
+=head1 SYNOPSIS
+
+  use Test::AnyEvent::plackup;
+  
+  $server = Test::AnyEvent::plackup->new;
+  $server->app('path/to/server.psgi');
+  $server->server('Starlet');
+  
+  ($start_cv, $stop_cv) = $server->start_server;
+  
+  $start_cv->cb(sub {
+      warn "Started";
+      $url = 'http://localhost:' . $server->port . '/';
+      ... get $url;
+      $server->stop_server;
+  });
+  
+  $stop_cv->cb(sub {
+      warn "Stopped";
+  });
+
+=head1 SEE ALSO
+
+L<Plack>, L<AnyEvent>.
+
+=head1 AUTHOR
+
+Wakaba <wakabatan@hatena.ne.jp>.
+
+=head1 LICENSE
+
+Copyright 2012 Hatena <http://www.hatena.ne.jp/>.
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
+
+=cut

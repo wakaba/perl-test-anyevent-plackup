@@ -1,0 +1,2 @@
+git://github.com/wakaba/perl-web-useragent-functions
+git://github.com/wakaba/perl-test-x1
