@@ -19,6 +19,7 @@ Makefile.setupenv:
 	$(WGET) -O $@ https://raw.github.com/wakaba/perl-setupenv/master/Makefile.setupenv
 
 lperl lplackup lprove local-perl perl-version perl-exec \
+remotedev-test \
 pmb-install pmb-update cinnamon \
 local-submodules generatepm: %: Makefile-setupenv
 	$(MAKE) --makefile Makefile.setupenv $@ \
