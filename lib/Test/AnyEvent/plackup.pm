@@ -152,6 +152,13 @@ sub stop_server {
 }
 
 sub DESTROY {
+    {
+        local $@;
+        eval { die };
+        if ($@ =~ /during global destruction/) {
+            warn "Detected (possibly) memory leak";
+        }
+    }
     $_[0]->stop_server if $_[0]->{pid};
     if ($_[0]->{temp_psgi_file_name}) {
         unlink $_[0]->{temp_psgi_file_name};
