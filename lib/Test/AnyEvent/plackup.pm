@@ -114,8 +114,15 @@ sub start_server {
     my $cv_end = AE::cv;
 
     my $port = $self->port;
+    my $time = 0;
     my $timer; $timer = AE::timer 0, 0.6, sub {
         my $netstat;
+        $time += 0.6;
+        if ($time > 10) {
+            undef $timer;
+            warn "plackup timeout!\n";
+            $cv_start->send(1);
+        }
         run_cmd(
             'LANG=C netstat --inet --inet6 -n -p -l',
             '>' => \$netstat,
@@ -127,8 +134,8 @@ sub start_server {
                 if ($_->{pid} == $pid and
                     $_->{local_port} == $port and
                     $_->{state} eq 'LISTEN') {
-                    $cv_start->send(0);
                     undef $timer;
+                    $cv_start->send(0);
                     last;
                 }
             }
