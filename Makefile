@@ -30,8 +30,12 @@ git-submodules:
 
 # ------ Tests ------
 
+PERL_ENV = PATH="$(abspath local/perl-$(PERL_VERSION)/pm/bin):$(PERL_PATH):$(PATH)" PERL5LIB="$(shell cat config/perl/libs.txt)"
+PROVE = prove
+
 test: test-deps test-main
 
 test-deps: git-submodules local-submodules pmb-install
 
 test-main:
+	$(PERL_ENV) $(PROVE) t/*.t
