@@ -59,7 +59,7 @@ test {
                 cb => sub {
                     my $res = $_[1];
                     test {
-                        is $res->code, 595;
+                        like $res->code, qr/^59[56]$/;
                         $cv->end;
                     } $c;
                 };
