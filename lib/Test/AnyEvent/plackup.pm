@@ -153,8 +153,7 @@ sub start_server {
 sub stop_server {
     my $self = shift;
     if ($self->{pid}) {
-        kill 3, $self->{pid}; # SIGQUIT
-        #kill 15, $self->{pid}; # SIGTERM
+        kill 15, $self->{pid}; # SIGTERM
         delete $self->{pid} if kill 0, $self->{pid};
     }
 }
