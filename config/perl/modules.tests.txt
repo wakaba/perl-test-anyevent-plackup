@@ -1,3 +1,6 @@
 Path::Class
 Plack
+Starlet
+Starman
 Test::More
+Twiggy
