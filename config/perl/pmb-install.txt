@@ -11,7 +11,7 @@ Scope::Guard~0.20
 Class::Data::Accessor~0.04004
 Proc::Wait3~0.04
 Sub::Uplevel~0.24
-Encode~2.46
+Encode~2.47
 Try::Tiny~0.11
 Devel::StackTrace~1.27
 Test::Tester~0.108
@@ -42,7 +42,7 @@ Parallel::Prefork~0.13
 Server::Starter~0.11
 Plack::Handler::Starlet
 Path::Class~0.26
-inc::latest~0.4002
+inc::latest~0.4003
 OAuth::Lite~1.31
 Pod::Cache~1.51
 Net::SSLeay~1.48
