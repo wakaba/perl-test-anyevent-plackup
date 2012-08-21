@@ -23,6 +23,21 @@ Test::AnyEvent::plackup - Starting HTTP server by |plackup| command for tests
       warn "Stopped";
   });
 
+=head1 USAGE
+
+=over 4
+
+=item $server->set_env(NAME => VALUE)
+
+Set the environment variable with specified name and value.  Any
+existing variable with same name is overridden.  If the value is
+C<undef>, the variable is unset.
+
+By default, the currently set environent variables (i.e. C<%ENV>) are
+used.
+
+=back
+
 =head1 DEPENDENCY
 
 The module depends on L<AnyEvent>.  In addition, it requires

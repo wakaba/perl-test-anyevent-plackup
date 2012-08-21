@@ -172,4 +172,28 @@ test {
     });
 } name => 'server bad app', n => 2;
 
+test {
+    my $c = shift;
+    my $server = Test::AnyEvent::plackup->new;
+
+    my $path = $ENV{PATH};
+    
+    my %envs = ($server->envs);
+    is_deeply \%envs, {%ENV};
+
+    $server->set_env(PATH => 'hoge.fuga');
+    my %envs2 = ($server->envs);
+    is_deeply \%envs2, {%ENV, PATH => 'hoge.fuga'};
+    is $envs2{PATH}, 'hoge.fuga';
+
+    $server->set_env(PATH => undef);
+    my %envs3 = ($server->envs);
+    is_deeply \%envs3, {%ENV, PATH => undef};
+    is $envs3{PATH}, undef;
+
+    is $ENV{PATH}, $path;
+
+    done $c;
+} name => 'envs', n => 6;
+
 run_tests;

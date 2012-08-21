@@ -76,6 +76,14 @@ sub get_command {
     return \@cmd;
 }
 
+sub set_env {
+    $_[0]->{envs}->{$_[1]} = $_[2];
+}
+
+sub envs {
+    return (%ENV, %{$_[0]->{envs} or {}});
+}
+
 # ------ Server ------
 
 sub onstdout {
@@ -98,6 +106,8 @@ sub pid {
 
 sub start_server {
     my $self = shift;
+
+    local %ENV = ($self->envs);
     
     my $command = $self->get_command;
     my $pid;
