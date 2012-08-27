@@ -6,7 +6,6 @@ use File::Temp;
 use AnyEvent;
 use AnyEvent::Util;
 use Net::TCP::FindPort;
-use Parse::Netstat ();
 
 sub new {
     return bless {options => {}}, $_[0];
@@ -110,6 +109,7 @@ sub start_server {
     local %ENV = ($self->envs);
     
     my $command = $self->get_command;
+    push @$command, '--loader' => '+Test::AnyEvent::plackup::Loader';
     my $pid;
 
     my $cv = run_cmd
@@ -123,6 +123,15 @@ sub start_server {
     my $cv_start = AE::cv;
     my $cv_end = AE::cv;
 
+    my $signal;
+    my $w; $w = AnyEvent->signal(
+        signal => 'USR1',
+        cb => sub {
+            $signal++;
+            undef $w;
+        },
+    );
+
     my $port = $self->port;
     my $time = 0;
     my $timer; $timer = AE::timer 0, 0.6, sub {
@@ -133,23 +142,10 @@ sub start_server {
             warn "plackup timeout!\n";
             $cv_start->send(1);
         }
-        run_cmd(
-            'LANG=C netstat --inet --inet6 -n -p -l',
-            '>' => \$netstat,
-            '2>' => \(my $dummy),
-        )->cb(sub {
-            my $stat = Parse::Netstat::parse_netstat(output => $netstat);
-            for (@{$stat->[2]->{active_conns} or []}) {
-                next unless defined $_->{pid};
-                if ($_->{pid} == $pid and
-                    $_->{local_port} == $port and
-                    $_->{state} eq 'LISTEN') {
-                    undef $timer;
-                    $cv_start->send(0);
-                    last;
-                }
-            }
-        });
+        if ($signal) {
+            $cv_start->send(0);
+            undef $timer;
+        }
     };
 
     $cv->cb(sub {
