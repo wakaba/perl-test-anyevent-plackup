@@ -40,13 +40,8 @@ used.
 
 =head1 DEPENDENCY
 
-The module requires Perl 5.8 or later.
-
-The module depends on L<AnyEvent>.  In addition, it requires
-L<Net::TCP::FindPort>, registered as Git submodule (See
-C<.gitmodules>).
-
-Apparently, it requires L<Plack> and C<plackup> command.
+The module requires Perl 5.8 or later, as well as L<Plack> and
+L<AnyEvent>.
 
 =head1 DEVELOPMENT
 
@@ -66,9 +61,14 @@ Wakaba <wakabatan@hatena.ne.jp>.
 
 motemen.
 
+=head1 ACKNOWLEDGEMENTS
+
+Part of this module derived from L<Net::TCP::FindPort>
+<https://github.com/wakaba/perl-net-tcp-findport>.
+
 =head1 LICENSE
 
-Copyright 2012 Hatena <http://www.hatena.ne.jp/>.
+Copyright 2010-2012 Hatena <http://www.hatena.ne.jp/>.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.

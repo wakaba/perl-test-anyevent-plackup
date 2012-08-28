@@ -59,11 +59,13 @@ Exporter::Lite~0.02
 Test::Builder~0.98
 UNIVERSAL::require~0.13
 Crypt::SSLeay~0.64
+ExtUtils::Constant~0.23
 AnyEvent::HTTP::Socks~0.04
 IO::Socket::Socks~0.62
 Crypt::OpenSSL::RSA~0.28
 HTML::Tagset~3.20
 List::Util~1.25
+Socket~2.006
 Compress::Raw::Bzip2~2.055
 Compress::Raw::Zlib~2.056
 Compress::Zlib~2.055

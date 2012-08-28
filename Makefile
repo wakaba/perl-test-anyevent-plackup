@@ -36,7 +36,7 @@ PROVE = prove
 
 test: test-deps test-main
 
-test-deps: git-submodules local-submodules pmb-install
+test-deps: git-submodules pmb-install
 
 test-main:
 	$(PERL_ENV) $(PROVE) t/*.t
