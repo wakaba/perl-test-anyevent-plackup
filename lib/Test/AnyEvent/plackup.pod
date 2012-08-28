@@ -23,7 +23,16 @@ Test::AnyEvent::plackup - Starting HTTP server by |plackup| command for tests
       warn "Stopped";
   });
 
-=head1 USAGE
+=head1 DESCRIPTION
+
+The C<Test::AnyEvent::plackup> module invokes the C<plackup> command
+of L<Plack> with specified options.  It might be useful for testing
+your PSGI Web applications, or applications that requires access to
+some Web applications.
+
+=head1 METHODS
+
+The module exposes following methods:
 
 =over 4
 
@@ -142,6 +151,10 @@ is likely outdated.  Use of GitHub version is always recommended.
 =head1 SEE ALSO
 
 L<Plack>, L<AnyEvent>.
+
+The <https://github.com/wakaba/perl-test-anyevent-servers> repository
+contain the module showing how to combine this module with test
+modules for other kinds of servers such as MySQL server.
 
 =head1 AUTHORS
 
