@@ -106,10 +106,25 @@ sub start_server {
     my $self = shift;
 
     local %ENV = ($self->envs);
+    my $ready = File::Temp->newdir;
+    my $ready_file_name = $ready->dirname . '/ready';
+    $ENV{TEST_ANYEVENT_PLACKUP_READY_FILE_NAME} = $ready_file_name;
     
     my $command = $self->get_command;
     push @$command, '--loader' => '+Test::AnyEvent::plackup::Loader';
     my $pid;
+
+    my $signal;
+    my $w; $w = AnyEvent->signal(
+        signal => 'USR1',
+        cb => sub {
+            if (-f $ready_file_name) {
+                $signal++;
+                undef $w;
+                undef $ready;
+            }
+        },
+    );
 
     my $cv = run_cmd
         $command,
@@ -121,15 +136,6 @@ sub start_server {
 
     my $cv_start = AE::cv;
     my $cv_end = AE::cv;
-
-    my $signal;
-    my $w; $w = AnyEvent->signal(
-        signal => 'USR1',
-        cb => sub {
-            $signal++;
-            undef $w;
-        },
-    );
 
     my $port = $self->port;
     my $time = 0;
