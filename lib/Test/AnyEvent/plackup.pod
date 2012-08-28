@@ -27,6 +27,52 @@ Test::AnyEvent::plackup - Starting HTTP server by |plackup| command for tests
 
 =over 4
 
+=item $server = Test::AnyEvent::plackup->new
+
+Create a new instance of the class.
+
+=item $server->plackup($path)
+
+Set the path to the C<plackup> command to invoke.  Default is
+C<plackup> (without path, i.e. search from C<PATH>).
+
+=item $server->app($path)
+
+Set the path to the PSGI application file.  It is used as the value of
+the C<--app> option to the C<plackup> command.  Nothing by default.
+
+=item $server->set_app_code($code_as_string)
+
+Set the Perl script code used as PSGI application.  The code must be
+passed as a character string.  It is written into a temporary file and
+then passed to the C<plackup> command.
+
+=item $server->server($server_module)
+
+Set the server module used by the C<plackup> command.  It is
+equivalent to specifying the C<--server> option to the C<plackup>
+command.
+
+=item $port = $server->port
+
+=item $server->port($port)
+
+Get or set the port the C<plackup>'s server should listen.  If it is
+not specified by the application, a random unused ephemeral port is
+assigned by the module.
+
+=item $server->set_option(NAME => VALUE)
+
+Set the command-line option to the C<plackup> command to the specified
+value.  Any previously specified value for the option is removed.
+
+=item $server->set_option(NAME => VALUE)
+
+Add the command-line option to the C<plackup> command with the
+specified value.  Any previously specified value for the option
+remains unchanged.  Order between options with same names are
+preserved.
+
 =item $server->set_env(NAME => VALUE)
 
 Set the environment variable with specified name and value.  Any
@@ -35,6 +81,44 @@ C<undef>, the variable is unset.
 
 By default, the currently set environent variables (i.e. C<%ENV>) are
 used.
+
+=item $server->onstdout($code)
+
+Specify the callback function that is invoked when a chunk is received
+from the standard output of the C<plackup> command.  The callback is
+invoked with an argument, which is the received chunk, or C<undef> for
+end of stream.  The callback is not expected to throw any exception.
+It must be specified before invocation of the C<start_server> method.
+By default, the standard output of the C<plackup> command is connected
+to the C<STDOUT>.
+
+=item $server->onstderr($code)
+
+Specify the callback function that is invoked when a chunk is received
+from the standard error output of the C<plackup> command.  The
+callback is invoked with an argument, which is the received chunk, or
+C<undef> for end of stream.  The callback is not expected to throw any
+exception.  It must be specified before invocation of the
+C<start_server> method.  By default, the standard error output of the
+C<plackup> command is connected to the C<STDERR>.
+
+=item $pid = $server->pid
+
+Return the process ID of the C<plackup> process.  It returns C<undef>
+if the command is not executed yet.
+
+=item ($start_cv, $end_cv) = $server->start_server
+
+Run the C<plackup> command with the options.  The method return two
+AnyEvent condvars.  The first condvar's callback is invoked when the
+server process has been started and the application can connect to the
+port.  The second condvar's callback is invoked when the server
+process has been stopped.
+
+=item $server->stop_server
+
+Stop the C<plackup> process.  This method must be invoked after the
+C<start_server> method invocation.
 
 =back
 
