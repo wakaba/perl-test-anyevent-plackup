@@ -40,11 +40,13 @@ used.
 
 =head1 DEPENDENCY
 
-The module depends on L<AnyEvent>.  In addition, it requires
-L<Net::TCP::FindPort> and L<Parse::Netstat>, both registered as Git
-submodules (See C<.gitmodules>).
+The module requires Perl 5.8 or later.
 
-Moreover, C<plackup> and C<netstat> commands are required.
+The module depends on L<AnyEvent>.  In addition, it requires
+L<Net::TCP::FindPort>, registered as Git submodule (See
+C<.gitmodules>).
+
+Apparently, it requires L<Plack> and C<plackup> command.
 
 =head1 DEVELOPMENT
 
@@ -58,9 +60,11 @@ The module is tested at Travis CI:
 
 L<Plack>, L<AnyEvent>.
 
-=head1 AUTHOR
+=head1 AUTHORS
 
 Wakaba <wakabatan@hatena.ne.jp>.
+
+motemen.
 
 =head1 LICENSE
 
