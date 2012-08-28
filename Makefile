@@ -40,3 +40,21 @@ test-deps: git-submodules pmb-install
 
 test-main:
 	$(PERL_ENV) $(PROVE) t/*.t
+
+# ------ Packaging ------
+
+GENERATEPM = local/generatepm/bin/generate-pm-package
+
+dist: generatepm
+	$(GENERATEPM) config/dist/test-anyevent-plackup.pi dist/ --generate-json
+
+dist-wakaba-packages: local/wakaba-packages dist
+	cp dist/*.json local/wakaba-packages/data/perl/
+	cp dist/*.tar.gz local/wakaba-packages/perl/
+	cd local/wakaba-packages && PERL5LIB="$(shell cat local/generatepm/config/perl/libs.txt)" $(MAKE) all
+
+local/wakaba-packages: always
+	git clone "git@github.com:wakaba/packages.git" $@ || (cd $@ && git pull)
+	cd $@ && git submodule update --init
+
+always:

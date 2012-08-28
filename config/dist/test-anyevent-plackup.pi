@@ -1,0 +1,36 @@
+{
+    main_module_name => 'Test::AnyEvent::plackup',
+    file_names => [qw(
+        lib/Test/AnyEvent/plackup.pm
+        lib/Test/AnyEvent/plackup.pod
+        t/test-anyevent-plackup.t
+        t/test-anyevent-plackup-starlet.t
+        t/test-anyevent-plackup-starman.t
+        t/test-anyevent-plackup-twiggy.t
+        config/dist/test-anyevent-plackup.pi
+    )],
+    req_modules => {
+        'parent' => 0,
+        'AnyEvent' => 0,
+        'File::Temp' => 0,
+        'Plack' => 0,
+        'Socket' => 0,
+    },
+    t_req_modules => {
+        'Path::Class' => 0,
+        'Test::More' => 0,
+        'Starlet' => 0,
+        'Starman' => 0,
+        'Twiggy' => 0,
+        'Web::UserAgent::Functions' => 0,
+        'Test::X1' => 0,
+    },
+    urls => {
+        git => {
+            GitHub => q<https://github.com/wakaba/perl-test-anyevent-plackup>,
+        },
+        ci => {
+            "Travis CI" => q<http://travis-ci.org/wakaba/perl-test-anyevent-plackup>,
+        }, 
+    },
+};

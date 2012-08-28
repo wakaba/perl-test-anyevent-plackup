@@ -135,6 +135,10 @@ Latest version of the module is available at the GitHub repository:
 The module is tested at Travis CI:
 <http://travis-ci.org/wakaba/perl-test-anyevent-plackup>.
 
+Tarball for the module is available at
+<http://wakaba.github.com/packages/perl/#Test-AnyEvent-plackup> but it
+is likely outdated.  Use of GitHub version is always recommended.
+
 =head1 SEE ALSO
 
 L<Plack>, L<AnyEvent>.
