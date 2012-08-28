@@ -1,13 +1,11 @@
 use strict;
-BEGIN {
-    my $dir_name = __FILE__; $dir_name =~ s{[^/]+$}{}; $dir_name ||= '.';
-    $dir_name .= '/../lib'; unshift @INC, $dir_name;
-}
 use warnings;
+use Path::Class;
+use lib file(__FILE__)->dir->parent->subdir('lib')->stringify;
+use lib glob file(__FILE__)->dir->subdir('modules', '*', 'lib')->stringify;
 use Test::X1;
 use Test::More;
 use Test::AnyEvent::plackup;
-use Path::Class;
 use Web::UserAgent::Functions qw(http_get);
 
 test {
