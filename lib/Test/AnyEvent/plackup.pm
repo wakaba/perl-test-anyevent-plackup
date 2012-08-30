@@ -20,6 +20,31 @@ sub add_option {
     push @{$_[0]->{options}->{$_[1]} ||= []}, $_[2];
 }
 
+sub perl {
+    if (@_ > 1) {
+        $_[0]->{perl} = $_[1];
+    }
+    return $_[0]->{perl};
+}
+
+sub perl_inc {
+    if (@_ > 1) {
+        $_[0]->{perl_inc} = $_[1];
+    }
+    return $_[0]->{perl_inc} || [];
+}
+
+sub _perl {
+    my $self = shift;
+    my $perl = $self->perl;
+    my $perl_inc = $self->perl_inc;
+    if (defined $perl or @$perl_inc) {
+        return (defined $perl ? $perl : 'perl', map { "-I$_" } @$perl_inc);
+    } else {
+        return ();
+    }
+}
+
 sub plackup {
     if (@_ > 1) {
         $_[0]->{plackup} = $_[1];
@@ -63,7 +88,7 @@ sub port {
 
 sub get_command {
     my $self = shift;
-    my @cmd = ($self->plackup);
+    my @cmd = (($self->_perl), $self->plackup);
     $self->port;
     for my $option (sort { $a cmp $b } keys %{$self->{options}}) {
         my $values = $self->{options}->{$option} or next;

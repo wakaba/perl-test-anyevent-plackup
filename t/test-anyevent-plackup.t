@@ -41,6 +41,51 @@ test {
 test {
     my $c = shift;
 
+    my $server = Test::AnyEvent::plackup->new;
+    $server->perl('path/to/perl');
+    is_deeply $server->get_command, [
+        'path/to/perl',
+        'plackup',
+        '--port' => $server->port,
+    ];
+
+    done $c;
+} name => 'command perl';
+
+test {
+    my $c = shift;
+
+    my $server = Test::AnyEvent::plackup->new;
+    $server->perl_inc(['path1', 'path2']);
+    is_deeply $server->get_command, [
+        'perl',
+        '-Ipath1', '-Ipath2',
+        'plackup',
+        '--port' => $server->port,
+    ];
+
+    done $c;
+} name => 'command perl lib';
+
+test {
+    my $c = shift;
+
+    my $server = Test::AnyEvent::plackup->new;
+    $server->perl('hoge');
+    $server->perl_inc(['path1', 'path2']);
+    is_deeply $server->get_command, [
+        'hoge',
+        '-Ipath1', '-Ipath2',
+        'plackup',
+        '--port' => $server->port,
+    ];
+
+    done $c;
+} name => 'command perl and lib';
+
+test {
+    my $c = shift;
+
     my $code = q{
         use strict;
         use warnings;

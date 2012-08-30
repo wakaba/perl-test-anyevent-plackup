@@ -40,6 +40,18 @@ The module exposes following methods:
 
 Create a new instance of the class.
 
+=item $server->perl($path)
+
+Set the path to the C<perl> command to invoke.  If none of C<perl> and
+C<perl_inc> is explicitly specified, the C<plackup> command is
+directly invoked.
+
+=item $server->perl_inc([$path1, $path2, ...])
+
+Set the array reference containing the paths used as additional
+C<@INC> paths (by specifying the C<-I> option to the C<perl> command).
+Default is the empty array referece.
+
 =item $server->plackup($path)
 
 Set the path to the C<plackup> command to invoke.  Default is
