@@ -179,8 +179,12 @@ sub start_server {
     };
 
     $cv->cb(sub {
+        my $return = $_[0]->recv;
+        if ($return >> 8) {
+            warn "Can't start plackup: " . $return;
+        }
         undef $timer;
-        $cv_end->send($_[0]->recv);
+        $cv_end->send($return);
     });
 
     return ($cv_start, $cv_end);
