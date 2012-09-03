@@ -38,11 +38,11 @@ sub _perl {
     my $self = shift;
     my $perl = $self->perl;
     my $perl_inc = $self->perl_inc;
-    if (defined $perl or @$perl_inc) {
-        return (defined $perl ? $perl : 'perl', map { "-I$_" } @$perl_inc);
-    } else {
-        return ();
-    }
+
+    my $plackup_lib_dir_name = $INC{'Test/AnyEvent/plackup.pm'};
+    $plackup_lib_dir_name =~ s{[/\\]Test[/\\]AnyEvent[/\\]plackup\.pm$}{};
+    push @$perl_inc, $plackup_lib_dir_name;
+    return (defined $perl ? $perl : 'perl', map { "-I$_" } @$perl_inc);
 }
 
 sub plackup {
