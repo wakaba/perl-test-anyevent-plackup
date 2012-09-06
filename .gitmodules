@@ -1,12 +1,6 @@
-[submodule "modules/parse-netstat"]
-	path = modules/parse-netstat
-	url = git://github.com/wakaba/perl-Parse-Netstat
-[submodule "modules/net-tcp-findport"]
-	path = modules/net-tcp-findport
-	url = git://github.com/wakaba/perl-net-tcp-findport
-[submodule "t/modules/web-useragent-functions"]
-	path = t/modules/web-useragent-functions
+[submodule "t_deps/modules/web-useragent-functions"]
+	path = t_deps/modules/web-useragent-functions
 	url = git://github.com/wakaba/perl-web-useragent-functions
-[submodule "t/modules/test-x1"]
-	path = t/modules/test-x1
+[submodule "t_deps/modules/test-x1"]
+	path = t_deps/modules/test-x1
 	url = git://github.com/wakaba/perl-test-x1
