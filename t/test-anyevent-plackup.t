@@ -13,7 +13,9 @@ test {
 
     my $server = Test::AnyEvent::plackup->new;
     is_deeply $server->get_command, [
-        'plackup',
+        'perl',
+        '-I' . file(__FILE__)->dir->parent->subdir('lib'),
+        do { my $v = `which plackup` || 'plackup'; chomp $v; $v },
         '--port' => $server->port,
     ];
 
@@ -29,6 +31,8 @@ test {
     $server->port(1244);
     $server->server('Twiggy');
     is_deeply $server->get_command, [
+        'perl',
+        '-I' . file(__FILE__)->dir->parent->subdir('lib'),
         'hoge/plackup',
         '--app' => 'path/to/app.psgi',
         '--port' => 1244,
@@ -45,7 +49,8 @@ test {
     $server->perl('path/to/perl');
     is_deeply $server->get_command, [
         'path/to/perl',
-        'plackup',
+        '-I' . file(__FILE__)->dir->parent->subdir('lib'),
+        do { my $v = `which plackup` || 'plackup'; chomp $v; $v },
         '--port' => $server->port,
     ];
 
@@ -60,7 +65,8 @@ test {
     is_deeply $server->get_command, [
         'perl',
         '-Ipath1', '-Ipath2',
-        'plackup',
+        '-I' . file(__FILE__)->dir->parent->subdir('lib'),
+        do { my $v = `which plackup` || 'plackup'; chomp $v; $v },
         '--port' => $server->port,
     ];
 
@@ -76,7 +82,8 @@ test {
     is_deeply $server->get_command, [
         'hoge',
         '-Ipath1', '-Ipath2',
-        'plackup',
+        '-I' . file(__FILE__)->dir->parent->subdir('lib'),
+        do { my $v = `which plackup` || 'plackup'; chomp $v; $v },
         '--port' => $server->port,
     ];
 
