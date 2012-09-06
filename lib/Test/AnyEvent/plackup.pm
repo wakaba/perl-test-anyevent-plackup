@@ -49,7 +49,11 @@ sub plackup {
     if (@_ > 1) {
         $_[0]->{plackup} = $_[1];
     }
-    return defined $_[0]->{plackup} ? $_[0]->{plackup} :  'plackup';
+    return $_[0]->{plackup} ||= do {
+        my $plackup = `which plackup`;
+        chomp $plackup;
+        $plackup || 'plackup';
+    };
 }
 
 sub app {
@@ -165,7 +169,6 @@ sub start_server {
     my $port = $self->port;
     my $time = 0;
     my $timer; $timer = AE::timer 0, 0.6, sub {
-        my $netstat;
         $time += 0.6;
         if ($time > 10) {
             undef $timer;
