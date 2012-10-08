@@ -1,7 +1,7 @@
 package Test::AnyEvent::plackup;
 use strict;
 use warnings;
-our $VERSION = '1.0';
+our $VERSION = '2.0';
 use File::Temp;
 use AnyEvent;
 use AnyEvent::Util;

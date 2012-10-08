@@ -6,3 +6,5 @@
 /Makefile.setupenv
 /config/perl/libs.txt
 /deps
+/dist
+/cin
