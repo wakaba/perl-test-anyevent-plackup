@@ -34,6 +34,13 @@ sub perl_inc {
     return $_[0]->{perl_inc} || [];
 }
 
+sub perl_options {
+    if (@_ > 1) {
+        $_[0]->{perl_options} = $_[1];
+    }
+    return $_[0]->{perl_options} || [];
+}
+
 sub _perl {
     my $self = shift;
     my $perl = $self->perl;
@@ -42,7 +49,11 @@ sub _perl {
     my $plackup_lib_dir_name = $INC{'Test/AnyEvent/plackup.pm'};
     $plackup_lib_dir_name =~ s{[/\\]Test[/\\]AnyEvent[/\\]plackup\.pm$}{};
     push @$perl_inc, $plackup_lib_dir_name;
-    return (defined $perl ? $perl : 'perl', map { "-I$_" } @$perl_inc);
+    return (
+        defined $perl ? $perl : 'perl',
+        (map { "-I$_" } @$perl_inc),
+        @{$self->perl_options},
+    );
 }
 
 sub plackup {
