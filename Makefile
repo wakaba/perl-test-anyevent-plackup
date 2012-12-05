@@ -1,31 +1,31 @@
+# -*- Makefile -*-
+
 all:
 
-# ------ Setup ------
+## ------ Setup ------
 
 WGET = wget
 GIT = git
 
-PMB_PMTAR_REPO_URL =
-PMB_PMPP_REPO_URL = 
-
-Makefile-setupenv: Makefile.setupenv
-	$(MAKE) --makefile Makefile.setupenv setupenv-update \
-	    SETUPENV_MIN_REVISION=20121008
-
-Makefile.setupenv:
-	$(WGET) -O $@ https://raw.github.com/wakaba/perl-setupenv/master/Makefile.setupenv
-
-pmbp-install pmbp-update generatepm: %: Makefile-setupenv
-	$(MAKE) --makefile Makefile.setupenv $@ \
-	    PMB_PMTAR_REPO_URL=$(PMB_PMTAR_REPO_URL) \
-	    PMB_PMPP_REPO_URL=$(PMB_PMPP_REPO_URL)
+deps: git-submodules pmbp-install
 
 git-submodules:
 	$(GIT) submodule update --init
 
-deps: git-submodules pmbp-install
+local/bin/pmbp.pl:
+	mkdir -p local/bin
+	$(WGET) -O $@ https://raw.github.com/wakaba/perl-setupenv/master/bin/pmbp.pl
+pmbp-upgrade: local/bin/pmbp.pl
+	perl local/bin/pmbp.pl --update-pmbp-pl
+pmbp-update: pmbp-upgrade
+	perl local/bin/pmbp.pl --update
+pmbp-install: pmbp-upgrade
+	perl local/bin/pmbp.pl --install \
+            --create-perl-command-shortcut perl \
+            --create-perl-command-shortcut prove \
+	    --create-perl-command-shortcut plackup
 
-# ------ Tests ------
+## ------ Tests ------
 
 PROVE = ./prove
 
@@ -36,7 +36,17 @@ test-deps: deps
 test-main:
 	$(PROVE) t/*.t
 
-# ------ Packaging ------
+## ------ Packaging ------
+
+Makefile-setupenv: Makefile.setupenv
+	$(MAKE) --makefile Makefile.setupenv setupenv-update \
+	    SETUPENV_MIN_REVISION=20120337
+
+Makefile.setupenv:
+	$(WGET) -O $@ https://raw.github.com/wakaba/perl-setupenv/master/Makefile.setupenv
+
+generatepm: %: Makefile-setupenv
+	$(MAKE) --makefile Makefile.setupenv $@
 
 GENERATEPM = local/generatepm/bin/generate-pm-package
 
@@ -49,7 +59,7 @@ dist-wakaba-packages: local/wakaba-packages dist
 	cd local/wakaba-packages && PERL5LIB="$(shell cat local/generatepm/config/perl/libs.txt)" $(MAKE) all
 
 local/wakaba-packages: always
-	$(GIT) clone "git@github.com:wakaba/packages.git" $@ || (cd $@ && git pull)
-	cd $@ && $(GIT) submodule update --init
+	git clone "git@github.com:wakaba/packages.git" $@ || (cd $@ && git pull)
+	cd $@ && git submodule update --init
 
 always:
