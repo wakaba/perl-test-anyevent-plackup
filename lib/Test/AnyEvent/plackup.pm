@@ -166,6 +166,7 @@ sub start_server {
         },
     );
 
+    #warn join ' ', @$command;
     my $cv = run_cmd
         $command,
         '>' => $self->onstdout || *STDOUT,
