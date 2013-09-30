@@ -1,7 +1,10 @@
 *~
-/config/perl/libs.txt
+/local/
 /perl
 /prove
+/plackup
 /Makefile.setupenv
-/config/perl/submodules.txt
-/local/
+/config/perl/libs.txt
+/deps
+/dist
+/cin

@@ -52,6 +52,11 @@ Set the array reference containing the paths used as additional
 C<@INC> paths (by specifying the C<-I> option to the C<perl> command).
 Default is the empty array referece.
 
+=item $server->perl_options([OPTIONS...]);
+
+Set the array reference containing additional options to the C<perl>
+command.  Default is the empty array reference.
+
 =item $server->plackup($path)
 
 Set the path to the C<plackup> command to invoke.  Default is

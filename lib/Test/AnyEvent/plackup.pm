@@ -1,7 +1,7 @@
 package Test::AnyEvent::plackup;
 use strict;
 use warnings;
-our $VERSION = '1.0';
+our $VERSION = '2.0';
 use File::Temp;
 use AnyEvent;
 use AnyEvent::Util;
@@ -34,6 +34,13 @@ sub perl_inc {
     return $_[0]->{perl_inc} || [];
 }
 
+sub perl_options {
+    if (@_ > 1) {
+        $_[0]->{perl_options} = $_[1];
+    }
+    return $_[0]->{perl_options} || [];
+}
+
 sub _perl {
     my $self = shift;
     my $perl = $self->perl;
@@ -42,7 +49,11 @@ sub _perl {
     my $plackup_lib_dir_name = $INC{'Test/AnyEvent/plackup.pm'};
     $plackup_lib_dir_name =~ s{[/\\]Test[/\\]AnyEvent[/\\]plackup\.pm$}{};
     push @$perl_inc, $plackup_lib_dir_name;
-    return (defined $perl ? $perl : 'perl', map { "-I$_" } @$perl_inc);
+    return (
+        defined $perl ? $perl : 'perl',
+        (map { "-I$_" } @$perl_inc),
+        @{$self->perl_options},
+    );
 }
 
 sub plackup {
@@ -155,6 +166,7 @@ sub start_server {
         },
     );
 
+    #warn join ' ', @$command;
     my $cv = run_cmd
         $command,
         '>' => $self->onstdout || *STDOUT,
