@@ -7,7 +7,7 @@ use AnyEvent;
 use AnyEvent::Util;
 
 sub new {
-    return bless {options => {}}, $_[0];
+    return bless {options => {}, pid => $$}, $_[0];
 }
 
 # ------ Command construction ------
@@ -202,6 +202,7 @@ sub stop_server {
 }
 
 sub DESTROY {
+    return unless ($_[0]->{pid} || 0) == $$;
     {
         local $@;
         eval { die };
