@@ -182,7 +182,7 @@ sub start_server {
     my $time = 0;
     my $timer; $timer = AE::timer 0, 0.6, sub {
         $time += 0.6;
-        if ($time > 10) {
+        if ($time > 20) {
             undef $timer;
             warn "plackup timeout!\n";
             $cv_start->send(1);
