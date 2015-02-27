@@ -173,6 +173,9 @@ The <https://github.com/wakaba/perl-test-anyevent-servers> repository
 contain the module showing how to combine this module with test
 modules for other kinds of servers such as MySQL server.
 
+A L<Promise>-aware variant, L<Promised::Plackup>, is available in another repository: 
+<https://github.com/wakaba/perl-promised-plackup>.
+
 =head1 AUTHORS
 
 Wakaba <wakabatan@hatena.ne.jp>.
