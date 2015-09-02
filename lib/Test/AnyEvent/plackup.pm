@@ -50,7 +50,7 @@ sub _perl {
     $plackup_lib_dir_name =~ s{[/\\]Test[/\\]AnyEvent[/\\]plackup\.pm$}{};
     push @$perl_inc, $plackup_lib_dir_name;
     return (
-        defined $perl ? $perl : 'perl',
+        defined $perl ? $perl : $^X,
         (map { "-I$_" } @$perl_inc),
         @{$self->perl_options},
     );
